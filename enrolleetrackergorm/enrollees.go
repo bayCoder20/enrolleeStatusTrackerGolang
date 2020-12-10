@@ -27,7 +27,7 @@ type Enrollee struct {
 	Dependents    []Dependent `json:"dependents" gorm:"foreignkey:EnrolleeID"`
 }
 
-// Dependent represents the model for an item in the enrollee
+// Dependent represents the model for a depenednt of an enrollee
 type Dependent struct {
 	// gorm.Model
 	DependentID   uint   `json:"dependentId" gorm:"primary_key"`
@@ -63,7 +63,7 @@ func initDB() {
 func createEnrollee(w http.ResponseWriter, r *http.Request) {
 	var enrollee Enrollee
 	json.NewDecoder(r.Body).Decode(&enrollee)
-	// Creates new enrollee by inserting records in the `enrollees` and `items` table
+	// Creates new enrollee by inserting records in the `enrollees` and `dependents` table
 	db.Create(&enrollee)
 	w.Header().Set("Content-Type", "application/json")
 	json.NewEncoder(w).Encode(enrollee)
